@@ -1,0 +1,44 @@
+<h1>User#Show</h1>
+<p>Find me in app/views/users/show.html.erb</p>
+
+<% if @user %>
+  <h3><%= @user.name %></h3>
+  <h3><%= @user.email %></h3>
+  <%= image_tag(@user.image) unless @user.image.nil? %>
+<% end %>
+<br>
+
+
+<% for collection in [@short_termers, @medium_termers, @long_termers] %>
+  <table> 
+    <tr>
+      <th>track</th>
+      <th>artist</th>
+      <th>album</th>
+      <th>popularity</th>
+      <th>tempo</th>
+      <th>valence</th>
+      <th>instrumentalness</th>
+      <th>energy</th>
+      <th>danceability</th>
+      <th>acousticness</th>
+    </tr>
+    <% for track in collection %>
+      <tr>
+        <td><%= track[:track] %></td>
+        <td><%= track[:artist] %></td>
+        <td><%= track[:album] %></td>
+        <td><%= track[:popularity] %></td>
+        <td><%= track[:tempo] %></td>
+        <td><%= track[:valence] %></td>
+        <td><%= track[:instrumentalness] %></td>
+        <td><%= track[:energy] %></td>
+        <td><%= track[:danceability] %></td>
+        <td><%= track[:acousticness] %></td>
+      </tr>
+    <% end%>
+  </table>
+<% end %>
+
+
+
