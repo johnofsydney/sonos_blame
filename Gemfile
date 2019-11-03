@@ -64,5 +64,5 @@ gem 'omniauth-spotify'
 # gem 'spotify-client', path: '~/Projects/gems/spotify-client'
 gem 'spotify-client', git: 'https://github.com/johnofsydney/spotify-client.git', branch: 'master'
 
-gem 'sidekiq'
+gem 'sidekiq', '5.2.7'
 gem 'pry-byebug'
