@@ -47,7 +47,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development, :test do
   gem 'capybara'
-  gem 'pry-byebug'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 4.0.0.beta2'
   gem 'rubocop'
@@ -66,8 +65,4 @@ gem 'omniauth-spotify'
 gem 'spotify-client', git: 'https://github.com/johnofsydney/spotify-client.git', branch: 'master'
 
 gem 'sidekiq'
-
-gem 'rails_12factor', group: :production
-
-# gem 'excon'
-# gem 'json'
+gem 'pry-byebug'
