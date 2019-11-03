@@ -66,5 +66,7 @@ gem 'spotify-client', path: '~/Projects/gems/spotify-client'
 
 gem 'sidekiq'
 
+gem 'rails_12factor', group: :production
+
 # gem 'excon'
 # gem 'json'
