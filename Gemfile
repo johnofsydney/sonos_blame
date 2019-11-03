@@ -47,13 +47,14 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development, :test do
   gem 'capybara'
+  gem 'pry-byebug'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 4.0.0.beta2'
   gem 'rubocop'
 end
 
 group :test do
-  gem 'faker', :git => 'https://github.com/faker-ruby/faker.git', :branch => 'master'
+  gem 'faker', git: 'https://github.com/faker-ruby/faker.git', branch: 'master'
   gem 'shoulda-matchers'
   gem 'simplecov'
 end
@@ -61,8 +62,8 @@ end
 gem 'devise'
 gem 'omniauth-github'
 gem 'omniauth-spotify'
-# gem 'spotify-client', path: '~/Projects/gems/spotify-client'
 gem 'spotify-client', git: 'https://github.com/johnofsydney/spotify-client.git', branch: 'master'
 
 gem 'sidekiq', '5.2.7'
-gem 'pry-byebug'
+# Sidekiq 6 requires Redis 4, Heroku uses RedisToGo, which is still at v3.x
+
