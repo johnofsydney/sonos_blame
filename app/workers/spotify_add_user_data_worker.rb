@@ -2,6 +2,8 @@ require 'spotify_client'
 require 'pry-byebug'
 
 class SpotifyAddUserDataWorker
+  LIMIT = 25
+  TERMS = ['short_term', 'medium_term', 'long_term']
   include Sidekiq::Worker
   sidekiq_options retry: false
   
@@ -13,6 +15,8 @@ class SpotifyAddUserDataWorker
     @spotify_id = @spotify_client.me["id"]
 
     write_user_top_tracks
+    write_user_top_artists
+    add_scores_to_artists
   end
 
 
@@ -20,10 +24,11 @@ class SpotifyAddUserDataWorker
 
     TopTrack.destroy_by(user_id: @user.id)
 
-    for timeframe in ['short_term', 'medium_term', 'long_term'] do
+    for timeframe in TERMS do
       for track in top_tracks(timeframe) do
         t = TopTrack.new
         t.artist = track[:artist]
+        t.artist_id = track[:artist_id]
         t.album = track[:album]
         t.track = track[:track]
         t.popularity = track[:popularity]
@@ -44,9 +49,10 @@ class SpotifyAddUserDataWorker
 
   def top_tracks(term)
     @spotify_client
-      .me_top_tracks(time_range: term, limit: 25)["items"]
+      .me_top_tracks(time_range: term, limit: LIMIT)["items"]
       .map{ |item| {
         artist: item["album"]["artists"].first["name"],
+        artist_id: item["album"]["artists"].first["id"],
         album: item["album"]["name"],
         track: item["name"],
         popularity: item["popularity"],
@@ -58,5 +64,40 @@ class SpotifyAddUserDataWorker
 
   def track_audio_features(track_id)
     @spotify_client.track_audio_features(track_id)
+  end
+
+  def write_user_top_artists
+    TopArtist.destroy_by(user_id: @user.id)
+
+    for timeframe in TERMS do
+      for artist in top_artists(timeframe) do
+        t = TopArtist.new
+        t.artist = artist[:artist]
+        t.timeframe = timeframe
+        t.user_id = @user.id
+        t.artist_id = artist[:id]
+        t.score = 1
+        t.save
+      end
+    end
+  end
+
+  def top_artists(term)
+    @spotify_client
+      .me_top_artists(time_range: term, limit: LIMIT)["items"]
+      .map{ |item| {
+        artist: item["name"],
+        artist_id: item['id']
+      }
+    }.uniq
+  end
+
+  def add_scores_to_artists
+    for timeframe in TERMS do
+      for track in top_tracks(timeframe) do
+        artist = @user.top_artists.find_by(artist_id: track[:artist_id])
+        binding.pry
+      end
+    end
   end
 end

@@ -40,5 +40,10 @@
   </table>
 <% end %>
 
+<h3>all your top artists</h3>
+<% for artist in @top_artists %>
+  <li><%= artist[:artist] %>, <%= artist[:score] %></li>
+<% end %>
+
 
 

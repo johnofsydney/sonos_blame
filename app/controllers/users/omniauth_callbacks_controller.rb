@@ -10,10 +10,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     session[:access_token] = access_token
 
     if @user.persisted?
-
       SpotifyAddUserDataWorker.perform_async(@user.id, access_token)
       flash[:notice] = "Spotify data getting added to db"
-
 
       sign_in_and_redirect @user, event: :authentication #this will throw if @user is not activated
       
