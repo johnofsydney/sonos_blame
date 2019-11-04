@@ -47,7 +47,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development, :test do
   gem 'capybara'
-
+  gem 'pry-byebug'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 4.0.0.beta2'
   gem 'rubocop'
@@ -66,4 +66,4 @@ gem 'spotify-client', git: 'https://github.com/johnofsydney/spotify-client.git',
 
 gem 'sidekiq', '5.2.7'
 # Sidekiq 6 requires Redis 4, Heroku uses RedisToGo, which is still at v3.x
-gem 'pry-byebug'
+

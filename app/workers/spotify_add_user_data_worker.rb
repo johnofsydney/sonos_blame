@@ -1,5 +1,4 @@
 require 'spotify_client'
-require 'pry-byebug'
 
 class SpotifyAddUserDataWorker
   LIMIT = 50
@@ -17,7 +16,6 @@ class SpotifyAddUserDataWorker
     write_user_top_tracks
     write_user_top_artists
     add_scores_to_artists
-    # binding.pry
   end
 
 
