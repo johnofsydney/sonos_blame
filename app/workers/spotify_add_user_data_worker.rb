@@ -27,14 +27,14 @@ class SpotifyAddUserDataWorker
       for track in top_tracks(timeframe) do
         # every track gets created as a record in the db
         t = TopTrack.new
-        t.artist = track[:artist]
-        t.artist_id = track[:artist_id]
-        t.album = track[:album]
-        t.track = track[:track]
-        t.popularity = track[:popularity]
-        t.timeframe = timeframe
-        t.user_id = @user.id
-        t.track_id = track[:id]
+        t[:artist] = track[:artist]
+        t[:artist_id] = track[:artist_id]
+        t[:album] = track[:album]
+        t[:track] = track[:track]
+        t[:popularity] = track[:popularity]
+        t[:timeframe] = timeframe
+        t[:user_id] = @user.id
+        t[:track_id] = track[:id]
         t.save
       end
     end
@@ -80,11 +80,11 @@ class SpotifyAddUserDataWorker
       existing_artist.save
     else
       t = TopArtist.new
-      t.artist = artist[:artist]
-      t.timeframe = timeframe
-      t.user_id = @user.id
-      t.artist_id = artist[:artist_id]
-      t.score = artist_timeframe_score(timeframe)
+      t[:artist] = artist[:artist]
+      t[:timeframe] = timeframe
+      t[:user_id] = @user.id
+      t[:artist_id] = artist[:artist_id]
+      t[:score] = artist_timeframe_score(timeframe)
       t.save
     end
   end
