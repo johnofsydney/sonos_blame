@@ -4,3 +4,10 @@
 <%= link_to 'View your own song info', current_user %>
 
 
+<%= form_with(url: "/spotify/search", local: true, method: "GET") do %>
+  <%= label_tag(:query, "search for band") %>
+  <%= text_field_tag(:query) %>
+  <%= submit_tag("Search") %>
+<% end %>
+
+
