@@ -27,6 +27,7 @@ class SpotifyAddUserDataWorker
 
     for timeframe in TERMS do
       for track in top_tracks(timeframe) do
+        # every track gets created as a record in the db
         t = TopTrack.new
         t.artist = track[:artist]
         t.artist_id = track[:artist_id]
@@ -36,13 +37,6 @@ class SpotifyAddUserDataWorker
         t.timeframe = timeframe
         t.user_id = @user.id
         t.track_id = track[:id]
-        track_features = track_audio_features(track[:id])
-        t.acousticness = track_features['acousticness']
-        t.danceability = track_features['danceability']
-        t.energy = track_features['energy']
-        t.instrumentalness = track_features['instrumentalness']
-        t.valence = track_features['valence']
-        t.tempo = track_features['tempo']
         t.save
       end
     end
@@ -61,6 +55,7 @@ class SpotifyAddUserDataWorker
         }
       }
       .sort_by{ |hsh| hsh[:popularity] }
+      .reject{ |hsh| hsh[:artist] == 'Various Artists' }
   end
 
   def track_audio_features(track_id)
@@ -72,22 +67,35 @@ class SpotifyAddUserDataWorker
 
     for timeframe in TERMS do
       for artist in top_artists(timeframe) do
+        # don't create a new artist if that artist already exists in the db
         existing_artist = @user.top_artists.find_by(artist_id: artist[:artist_id])
-        if existing_artist
-          existing_artist[:score] = existing_artist[:score] + 1
-          existing_artist[:timeframe] = 'multiple'
-          existing_artist.save
-        else
-          t = TopArtist.new
-          t.artist = artist[:artist]
-          t.timeframe = timeframe
-          t.user_id = @user.id
-          t.artist_id = artist[:artist_id]
-          t.score = 1
-          t.save
-        end
+
+        add_or_modify_artist(existing_artist, timeframe, artist)
       end
     end
+  end
+
+  def add_or_modify_artist(existing_artist, timeframe, artist)
+    if existing_artist
+      existing_artist[:score] = existing_artist[:score] + artist_timeframe_score(timeframe)
+      existing_artist[:timeframe] = 'multiple'
+      existing_artist.save
+    else
+      t = TopArtist.new
+      t.artist = artist[:artist]
+      t.timeframe = timeframe
+      t.user_id = @user.id
+      t.artist_id = artist[:artist_id]
+      t.score = artist_timeframe_score(timeframe)
+      t.save
+    end
+  end
+
+  def artist_timeframe_score(timeframe)
+    return 8 if timeframe == 'long_term'
+    return 6 if timeframe == 'medium_term'
+    return 3 if timeframe == 'short_term'
+    return 0
   end
 
   def top_artists(term)
@@ -97,24 +105,31 @@ class SpotifyAddUserDataWorker
         artist: item["name"],
         artist_id: item['id']
       }
-    }
+    }.reject{ |hsh| hsh[:artist] == 'Various Artists' }
   end
 
   def add_scores_to_artists
     for track in @user.top_tracks do
       artist = @user.top_artists.find_by(artist_id: track[:artist_id])
       if artist
-        artist[:score] = artist[:score] + 1
+        artist[:score] = artist[:score] + artist_score_from_track(track[:timeframe])
         artist.save
       else
         t = TopArtist.new
         t.artist = track[:artist]
-        t.timeframe = "timeframe"
+        t.timeframe = track[:timeframe]
         t.user_id = @user.id
         t.artist_id = track[:artist_id]
-        t.score = 1
+        t.score = artist_score_from_track(track[:timeframe])
         t.save
       end
     end
+  end
+
+  def artist_score_from_track(timeframe)
+    return 3 if timeframe == 'long_term'
+    return 2 if timeframe == 'medium_term'
+    return 1 if timeframe == 'short_term'
+    return 0
   end
 end
