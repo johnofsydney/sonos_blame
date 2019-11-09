@@ -1,0 +1,10 @@
+<h1>Spotify#search_band</h1>
+<p>Find me in app/views/spotify/search_band.html.erb</p>
+
+<p>Who is playing <%= @band_name %>?</p>
+
+<p>Probably <%= @list.first[:name] %></p>
+
+<% @list.each do |user| %>
+  <li><%= user[:name] %> - <%= user[:score] %></li>
+<% end %>
