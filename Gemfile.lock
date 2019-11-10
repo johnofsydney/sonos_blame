@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/johnofsydney/faker.git
-  revision: 0d05d358e1b1937c0e646091e8af58a3fa0544dc
+  revision: c550f6b6433283c2f05030b8c6a503b5a03aeb30
   branch: master
   specs:
     faker (2.6.0)

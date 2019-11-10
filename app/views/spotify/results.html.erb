@@ -1,5 +1,12 @@
-<h1>Spotify#search_band</h1>
-<p>Find me in app/views/spotify/search_band.html.erb</p>
+<h1>Who is playing <%= @artist_name %>?</h1>
 
-<p>Who is playing <%= @band_name %>?</p>
+<h2>Probably <%= @winner %></h2>
+
+<% unless @suspects.empty? %>
+  <h4>other suspects include...</h4>
+  <%= @suspects %>
+<% end %>
+
+<p> <%= @explanation %></p>
+<p>Confidence: <%= @confidence %></p>
 

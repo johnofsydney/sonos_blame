@@ -47,6 +47,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :development, :test do
   gem 'capybara'
+  gem 'faker', git: 'https://github.com/johnofsydney/faker.git', branch: 'master'
   gem 'pry-byebug'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 4.0.0.beta2'
@@ -54,7 +55,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'faker', git: 'https://github.com/johnofsydney/faker.git', branch: 'master'
   gem 'shoulda-matchers'
   gem 'simplecov'
 end
