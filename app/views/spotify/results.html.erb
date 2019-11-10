@@ -3,8 +3,3 @@
 
 <p>Who is playing <%= @band_name %>?</p>
 
-<p>Probably <%= @list.first[:name] %></p>
-
-<% @list.each do |user| %>
-  <li><%= user[:name] %> - <%= user[:score] %></li>
-<% end %>
