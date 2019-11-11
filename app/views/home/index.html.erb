@@ -1,13 +1,26 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
 
-<%= link_to 'View your own song info', current_user %>
+<h2>Sonos Blame</h2>
+
+<% if current_user %>
+  
 
 
-<%= form_with(url: "/spotify/search", local: true, method: "GET") do %>
-  <%= label_tag(:query, "search for band") %>
-  <%= text_field_tag(:query) %>
-  <%= submit_tag("Search") %>
+  <%= form_with(url: "/spotify/search", local: true, method: "GET") do %>
+    <%= label_tag(:query, "search for artist") %>
+    <%= text_field_tag(:query) %>
+    <%= submit_tag("Search") %>
+  <% end %>
+
+  <p><%= link_to 'Review your own excellent choices', current_user %></p>
+
+  <p><%= link_to 'View other users terrible tastes', users_path %></p>
+
+
+
+<% else %>
+
+  <p>login with your spotify account to see who is playing that artist on sonos...</p>
 <% end %>
+
 
 

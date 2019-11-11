@@ -2,10 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+* {
+  font-family: Verdana,
+  Geneva,
+  Tahoma,
+  sans-serif;
+  // border: red 1px solid;
+}
+
 table {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 0.5rem;
   padding: 2rem;
+  padding-top: 0;
   width: 100%;
   white-space: nowrap;
   table-layout: fixed;
@@ -15,4 +24,34 @@ td {
   // width: 20%;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
+}
+
+th {
+  text-align: left;
+}
+
+ul.hmenu {
+  list-style: none;
+  margin: 0 0 2em;
+  padding: 0;
+}
+
+ul.hmenu li {
+  display: inline;
+}
+
+ol>li {
+  font-size: 1rem;
+}
+
+#user_banner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#user_banner > img {
+  border-radius: 50%;
+  height: 5rem;
 }

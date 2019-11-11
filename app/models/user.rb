@@ -9,7 +9,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: %i[spotify github]
+         :omniauthable, omniauth_providers: %i[spotify]
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -25,9 +25,6 @@ class User < ApplicationRecord
 
   def self.new_with_session(params, session)
     super.tap do |user|
-      if data = session["devise.github"] && session["devise.github_data"]["extra"]["raw_info"]
-        user.email = data["email"] if user.email.blank?
-      end
       if data = session["devise.spotify"] && session["devise.spotify_data"]["extra"]["raw_info"]
         user.email = data["email"] if user.email.blank?
       end

@@ -1,35 +1,39 @@
-<h1>User#Show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
-
 <% if @user %>
-  <h3><%= @user.name %></h3>
-  <h3><%= @user.email %></h3>
-  <%= image_tag(@user.image) unless @user.image.nil? %>
-<% end %>
-<br>
+  
+  <div id="user_banner">
+    <h3><%= @user.name %></h3>
+    <%= image_tag(@user.image) unless @user.image.nil? %>
+  </div>
+  
 
-
-<% for collection in [@short_termers, @medium_termers, @long_termers] %>
-  <table> 
-    <tr>
-      <th>track</th>
-      <th>artist</th>
-      <th>album</th>
-    </tr>
-    <% for track in collection %>
-      <tr>
-        <td><%= track[:track] %></td>
-        <td><%= track[:artist] %></td>
-        <td><%= track[:album] %></td>
+  <% for collection in [@short_termers, @medium_termers, @long_termers] %>
+    <table>
+      <tr> <%= collection.first[:timeframe] %> favourites
+        <th>track</th>
+        <th>artist</th>
+        <th>album</th>
       </tr>
-    <% end%>
-  </table>
+      <% for track in collection %>
+        <tr>
+          <td><%= track[:track] %></td>
+          <td><%= track[:artist] %></td>
+          <td><%= track[:album] %></td>
+        </tr>
+      <% end%>
+    </table>
+  <% end %>
+
+  <h3>Top Artists in order</h3>
+  <ol>
+    <% for artist in @top_artists %>
+      <li><%= artist[:artist] %></li>
+    <% end %>
+  </ol>
+
 <% end %>
 
-<h3>all your top artists</h3>
-<% for artist in @top_artists %>
-  <li><%= artist[:artist] %>, <%= artist[:score] %></li>
-<% end %>
+
+
 
 
 

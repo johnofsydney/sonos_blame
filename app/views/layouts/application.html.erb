@@ -10,6 +10,11 @@
   </head>
 
   <body>
+    <ul class="hmenu">
+      <li><%= link_to 'Home', root_path %></li>
+      <li> | </li>
+      <li><%= render 'devise/menu/login_items' %></li>
+    </ul>
     <%= yield %>
   </body>
 </html>
