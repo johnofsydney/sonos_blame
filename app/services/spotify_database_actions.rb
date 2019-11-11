@@ -1,5 +1,4 @@
 require_relative '../../lib/constants'
-require 'pry-byebug'
 
 class SpotifyDatabaseActions
   # the require brings the file in

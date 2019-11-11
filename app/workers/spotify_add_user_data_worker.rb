@@ -1,5 +1,4 @@
 require 'spotify_client'
-require 'pry-byebug'
 
 require_relative '../services/spotify_database_actions'
 

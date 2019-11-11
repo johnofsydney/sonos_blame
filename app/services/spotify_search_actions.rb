@@ -1,5 +1,4 @@
 require_relative '../../lib/constants'
-require 'pry-byebug'
 require 'spotify_client'
 
 class SpotifySearchActions

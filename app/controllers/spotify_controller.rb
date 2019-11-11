@@ -1,4 +1,3 @@
-require 'pry-byebug'
 require 'spotify_search_actions'
 
 class SpotifyController < ApplicationController
