@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get '/spotify/search', to: 'spotify#results'
   get '/spotify/unknown', to: 'spotify#unknown'
+  get '/spotify/recommendations', to: 'spotify#recommendations'
   
   # get 'home/index'
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }

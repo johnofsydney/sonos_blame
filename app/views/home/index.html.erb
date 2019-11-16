@@ -15,6 +15,18 @@
 
   <p><%= link_to 'View other users terrible tastes', users_path %></p>
 
+  <%= form_with(url: '/spotify/recommendations', local: true, method: "GET") do %>
+    <%= text_field_tag(:min_acousticness) %>
+    <%= text_field_tag(:min_danceability) %>
+    <%= text_field_tag(:min_energy) %>
+    <%= text_field_tag(:min_instrumentalness) %>
+    <%= text_field_tag(:min_popularity) %>
+    <%= text_field_tag(:min_speechiness) %>
+    <%= text_field_tag(:min_tempo) %>
+    <%= text_field_tag(:min_valence) %>
+    <%= submit_tag("Generate Playlist") %>
+  <% end %>
+
 
 
 <% else %>
