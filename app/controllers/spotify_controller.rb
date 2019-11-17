@@ -1,10 +1,11 @@
 require 'pry-byebug'
 require 'spotify_search_actions'
+require 'spotify_playlist_actions'
 
 class SpotifyController < ApplicationController
 
   def results
-    @band_name = whitelist_params[:query]
+    @band_name = whitelist_search_params[:query]
 
     # send it to spotify
     # and retrieve the artist_id
@@ -110,8 +111,46 @@ class SpotifyController < ApplicationController
   def unknown
   end
 
+  def recommendations_all
+    params = whitelist_recommend_params.to_h.with_indifferent_access
+
+    seeds = TopArtist
+            .select{ |a| a.score > 15 }
+            .take(5)
+            .map{ |a| a.artist_id }
+
+    # copy this format for action...
+    access_token = session[:access_token]
+    client = SpotifyPlaylistActions.new(current_user, access_token)
+    # results = search.search_artist(@band_name)
+
+    playlist_object = client.get_recommendations_from_artists(seeds)
+
+    name = "sonos-blame-#{Time.now.to_formatted_s(:db).gsub(' ','-')}"
+    playlist = client.make_playlist(name)
+    # create_user_playlist(user_id, name, is_public = true)
+
+    
+    uris = playlist_object['tracks'].map{ |track| track['uri'] }
+    result = client.add_tracks_to_playlist(playlist['id'], uris)
+    binding.pry
+
+    # will auomatically redirect to recomendations_all view
+  end
+
   private
-  def whitelist_params
+  def whitelist_search_params
     params.permit(:query, :commit)
+  end
+
+  def whitelist_recommend_params
+    params.permit(
+      acousticness: {},
+      danceability: {},
+      energy: {},
+      instrumentalness: {},
+      valence: {}, 
+      popularity: {}
+      )
   end
 end

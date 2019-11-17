@@ -262,7 +262,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   spotify_client_id = Rails.application.credentials.spotify[:client_id]
   spotify_client_secret = Rails.application.credentials.spotify[:client_secret]
-  config.omniauth :spotify, spotify_client_id, spotify_client_secret, scope: 'user-read-private,user-read-email,playlist-read-private,user-read-currently-playing,user-library-read,user-read-recently-played,user-top-read'
+  config.omniauth :spotify, spotify_client_id, spotify_client_secret, scope: 'user-read-private,user-read-email,playlist-read-private,user-read-currently-playing,user-library-read,user-read-recently-played,user-top-read,playlist-modify-public'
   github_client_id = Rails.application.credentials.github[:client_id]
   github_client_secret = Rails.application.credentials.github[:client_secret]
   config.omniauth :github, github_client_id, github_client_secret, scope: 'user,public_repo'

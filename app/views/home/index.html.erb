@@ -13,18 +13,35 @@
 
   <p><%= link_to 'Review your own excellent choices', current_user %></p>
 
-  <p><%= link_to 'View other users terrible tastes', users_path %></p>
 
-  <%= form_with(url: '/spotify/recommendations', local: true, method: "GET") do %>
-    <%= text_field_tag(:min_acousticness) %>
-    <%= text_field_tag(:min_danceability) %>
-    <%= text_field_tag(:min_energy) %>
-    <%= text_field_tag(:min_instrumentalness) %>
-    <%= text_field_tag(:min_popularity) %>
-    <%= text_field_tag(:min_speechiness) %>
-    <%= text_field_tag(:min_tempo) %>
-    <%= text_field_tag(:min_valence) %>
+  <%= form_with(url: '/spotify/recommendations_all', local: true, method: "GET") do %>
+    <table>
+    <%= text_field_tag('acousticness[min]') %>
+    <%= label_tag('acousticness') %>
+    <%= text_field_tag('acousticness[max]') %>
+    <br>
+    <%= text_field_tag('danceability[min]') %>
+    <%= label_tag('danceability') %>
+    <%= text_field_tag('danceability[max]') %>
+    <br>
+    <%= text_field_tag('energy[min]') %>
+    <%= label_tag('energy') %>
+    <%= text_field_tag('energy[max]') %>
+    <br>
+    <%= text_field_tag('instrumentalness[min]') %>
+    <%= label_tag('instrumentalness') %>
+    <%= text_field_tag('instrumentalness[max]') %>
+    <br>
+    <%= text_field_tag('valence[min]') %>
+    <%= label_tag('valence') %>
+    <%= text_field_tag('valence[max]') %>
+    <br>
+    <%= text_field_tag('popularity[min]') %>
+    <%= label_tag('popularity') %>
+    <%= text_field_tag('popularity[max]') %>
+    <br>
     <%= submit_tag("Generate Playlist") %>
+    </table>
   <% end %>
 
 
