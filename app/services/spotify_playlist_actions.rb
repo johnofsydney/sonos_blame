@@ -21,11 +21,7 @@ class SpotifyPlaylistActions
 
   def add_tracks_to_playlist(playlist_id, uris)
     # def add_user_tracks_to_playlist(user_id, playlist_id, uris = [], position = nil)
-    @spotify_client.add_user_tracks_to_playlist(
-      @spotify_user_id, 
-      playlist_id, 
-      uris
-    )
+    @spotify_client.add_tracks_to_playlist(playlist_id, uris)
   end
 end
 

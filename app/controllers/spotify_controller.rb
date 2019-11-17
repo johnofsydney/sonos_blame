@@ -132,10 +132,15 @@ class SpotifyController < ApplicationController
 
     
     uris = playlist_object['tracks'].map{ |track| track['uri'] }
+    # binding.pry
+
+
     result = client.add_tracks_to_playlist(playlist['id'], uris)
+    
+    @playlist_url = playlist['external_urls']['spotify']
+    # will auomatically redirect to recomendations_all view
     binding.pry
 
-    # will auomatically redirect to recomendations_all view
   end
 
   private
