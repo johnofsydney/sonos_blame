@@ -1,9 +1,10 @@
 require 'spotify_search_actions'
+require 'spotify_playlist_actions'
 
 class SpotifyController < ApplicationController
 
   def results
-    @band_name = whitelist_params[:query]
+    @band_name = whitelist_search_params[:query]
 
     # send it to spotify
     # and retrieve the artist_id
@@ -109,8 +110,66 @@ class SpotifyController < ApplicationController
   def unknown
   end
 
+  def recommendations_all
+    params = whitelist_recommend_params.to_h.with_indifferent_access
+
+    seeds = TopArtist
+            .where(user_id: current_user.id)
+            .sort_by{ |h| h.score }
+            .reverse
+            .take(40)
+            .shuffle
+            .take(5)
+            .map{ |a| {id: a.artist_id, name: a.artist} }
+
+
+    access_token = session[:access_token]
+    client = SpotifyPlaylistActions.new(current_user, access_token)
+    options = {
+      seed_artists: seeds.map{ |s| s[:id] }, 
+      max_acousticness: params[:acousticness][:max].to_f,
+      min_acousticness: params[:acousticness][:min].to_f,
+      max_danceability: params[:danceability][:max].to_f,
+      min_danceability: params[:danceability][:min].to_f,
+      max_energy: params[:energy][:max].to_f,
+      min_energy: params[:energy][:min].to_f,
+      max_instrumentalness: params[:instrumentalness][:max].to_f,
+      min_instrumentalness: params[:instrumentalness][:min].to_f,
+      max_valence: params[:valence][:max].to_f,
+      min_valence: params[:valence][:min].to_f,
+      max_popularity: params[:popularity][:max].to_i,
+      min_popularity: params[:popularity][:min].to_i
+    }
+
+
+    name = "sonos-blame-#{Time.now.to_formatted_s(:db).gsub(' ','-')}"
+    playlist = client.make_playlist(name)
+
+    playlist_object = client.get_recommendations_from_artists(options)    
+    uris = playlist_object['tracks'].map{ |track| track['uri'] }
+    result = client.add_tracks_to_playlist(playlist['id'], uris)
+
+    @initial_pool_size = playlist_object["seeds"].first["initialPoolSize"]
+    @after_filtering_size = playlist_object["seeds"].first["afterFilteringSize"]
+
+    @artists = seeds.map{ |s| s[:name] }
+    @playlist_url = playlist['external_urls']['spotify']
+
+  end
+
   private
-  def whitelist_params
+  def whitelist_search_params
     params.permit(:query, :commit)
+  end
+
+  def whitelist_recommend_params
+    params.permit(
+      acousticness: {},
+      danceability: {},
+      energy: {},
+      instrumentalness: {},
+      valence: {}, 
+      popularity: {}
+      )
   end
 end

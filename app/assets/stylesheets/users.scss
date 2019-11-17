@@ -45,6 +45,10 @@ ol>li {
   font-size: 1rem;
 }
 
+ol {
+  margin-left: 2rem;
+}
+
 #user_banner {
   display: flex;
   flex-direction: row;
@@ -54,4 +58,22 @@ ol>li {
 #user_banner > img {
   border-radius: 50%;
   height: 5rem;
+}
+
+.left, .right {
+  width: 3rem;
+}
+
+#playlist_form {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 2rem;
+  background-color: cyan;
+}
+
+#search_form {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 2rem;
+  background-color: pink;
 }

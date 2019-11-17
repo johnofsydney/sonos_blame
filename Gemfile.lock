@@ -8,10 +8,10 @@ GIT
 
 GIT
   remote: https://github.com/johnofsydney/spotify-client.git
-  revision: 9f4f4b3ac8151740607b2d81fa5452634247dc00
+  revision: dfbc2acf6a0ba3ea0281db9c524411f10535ef3e
   branch: master
   specs:
-    spotify-client (0.0.9)
+    spotify-client (0.0.9.5)
       excon (~> 0.37)
 
 GEM
