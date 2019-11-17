@@ -56,7 +56,7 @@ class SpotifyController < ApplicationController
                     .map{ |a| {name: a["name"], id: a["id"], popularity: a["popularity"]} }
                     .sort_by{ |a| a[:popularity] }
                     .reverse
-                    .take(5)
+                    .take(10)
 
     artist_ids = related_artists.map{ |hsh| hsh[:id] } + [artist_id]
     related_artist_names = related_artists.map{ |a| a[:name] }
