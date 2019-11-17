@@ -1,6 +1,8 @@
 
 <% if @playlist_url %>
   <p>Your new playlist has been saved to spotify</p>
+  <p>The following artists were used to generate your playlist: <%= @artists %></p>
+  <p>The pool size was <%= @initial_pool_size %>(initial) <%= @after_filtering_size %>(after filtering) </p>
   <%= link_to 'Open your playlist on spotify', @playlist_url, target: :_blank %>
 <% else %>
   <p>There was a problem, not possible to say what it was...</p>
