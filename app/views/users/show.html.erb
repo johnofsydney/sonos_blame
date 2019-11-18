@@ -5,7 +5,7 @@
     <%= image_tag(@user.image) unless @user.image.nil? %>
   </div>
   
-  <% if @collections.empty? %>
+  <% if @collections.empty? || @collections.nil? %>
     <p>You don't listen to much music...</p>
   <% else %>
       <% for collection in @collections %>
