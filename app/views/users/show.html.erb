@@ -5,31 +5,35 @@
     <%= image_tag(@user.image) unless @user.image.nil? %>
   </div>
   
-
-  <% for collection in [@short_termers, @medium_termers, @long_termers] %>
-    <table>
-      <tr> <%= collection.first[:timeframe] %> favourites
-        <th>track</th>
-        <th>artist</th>
-        <th>album</th>
-      </tr>
-      <% for track in collection %>
-        <tr>
-          <td><%= track[:track] %></td>
-          <td><%= track[:artist] %></td>
-          <td><%= track[:album] %></td>
-        </tr>
-      <% end%>
-    </table>
+  <% if @collections.empty? %>
+    <p>You don't listen to much music...</p>
+  <% else %>
+      <% for collection in @collections %>
+        <table>
+          <tr> <%= collection.first[:timeframe] %> favourites
+            <th>track</th>
+            <th>artist</th>
+            <th>album</th>
+          </tr>
+          <% for track in collection %>
+            <tr>
+              <td><%= track[:track] %></td>
+              <td><%= track[:artist] %></td>
+              <td><%= track[:album] %></td>
+            </tr>
+          <% end%>
+        </table>
+      <% end %>
   <% end %>
 
-  <h3>Top Artists in order</h3>
-  <ol>
-    <% for artist in @top_artists %>
-      <li><%= artist[:artist] %></li>
-    <% end %>
-  </ol>
-
+  <% if @top_artists %>
+    <h3>Top Artists in order</h3>
+    <ol>
+      <% for artist in @top_artists %>
+        <li><%= artist[:artist] %></li>
+      <% end %>
+    </ol>
+  <% end %>
 <% end %>
 
 
