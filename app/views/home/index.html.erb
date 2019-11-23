@@ -15,53 +15,12 @@
 
   <div id="brag">
     <p><%= link_to 'Review your own excellent choices', current_user %></p>
-    <p><%= link_to 'Marvel at your colleagues bad taste', users_path %></p>
   </div>
-  <div id="playlist_form">
-  <p>Generate a playlist based on a random 5 artists from your own top 40. Tweak the features of the tracks you'd like on the playlist below. Click the ::Generate Playlist:: button for results.</p>
-  <%= form_with(url: '/spotify/recommendations_all', local: true, method: "GET") do %>
-    <table>
-      <tr>
-        <td><%= text_field_tag('acousticness[min]', 0.0, class: 'left') %></td>
-        <td><%= label_tag('acousticness', nil, class: "center") %></td>
-        <td><%= text_field_tag('acousticness[max]', 1.0, class: "right") %></td>
-      </tr>
-      <tr>
-        <td><%= text_field_tag('danceability[min]', 0.0, class: 'left') %></td>
-        <td><%= label_tag('danceability', nil, class: "center") %></td>
-        <td><%= text_field_tag('danceability[max]', 1.0, class: "right") %></td>
-      </tr>
-      <tr>
-        <td><%= text_field_tag('energy[min]', 0.0, class: 'left') %></td>
-        <td><%= label_tag('energy', nil, class: "center") %></td>
-        <td><%= text_field_tag('energy[max]', 1.0, class: "right") %></td>
-      </tr>
-      <tr>
-        <td><%= text_field_tag('instrumentalness[min]', 0.0, class: 'left') %></td>
-        <td><%= label_tag('instrumentalness', nil, class: "center") %></td>
-        <td><%= text_field_tag('instrumentalness[max]', 1.0, class: "right") %></td>
-      </tr>
-      <tr>
-        <td><%= text_field_tag('valence[min]', 0.0, class: 'left') %></td>
-        <td><%= label_tag('valence (cheerfulness)', nil, class: "center") %></td>
-        <td><%= text_field_tag('valence[max]', 1.0, class: "right") %></td>
-      </tr>
-      <tr>
-        <td><%= text_field_tag('popularity[min]', 0, class: 'left') %></td>
-        <td><%= label_tag('popularity', nil, class: "center") %></td>
-        <td><%= text_field_tag('popularity[max]', 100, class: "right") %></td>
-      </tr>
-      <tr>
-        <td><%= submit_tag("Generate Playlist") %></td>
-      </tr>
-    </table>
-  <% end %>
-  </div>
-
+  
 
 <% else %>
 
-  <p>login with your spotify account to see who is playing that artist on sonos...</p>
+  <p>login with your spotify account to see who is playing that band / singer on sonos...</p>
 <% end %>
 
 
