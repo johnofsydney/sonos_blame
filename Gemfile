@@ -64,6 +64,6 @@ gem 'omniauth-github'
 gem 'omniauth-spotify'
 gem 'spotify-client', git: 'https://github.com/johnofsydney/spotify-client.git', branch: 'master'
 
-gem 'sidekiq', '5.2.7'
+gem 'sidekiq', '6.4.0'
 # Sidekiq 6 requires Redis 4, Heroku uses RedisToGo, which is still at v3.x
 
