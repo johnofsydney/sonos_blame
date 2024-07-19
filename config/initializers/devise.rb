@@ -263,9 +263,10 @@ Devise.setup do |config|
   spotify_client_id = Rails.application.credentials.spotify[:client_id]
   spotify_client_secret = Rails.application.credentials.spotify[:client_secret]
   config.omniauth :spotify, spotify_client_id, spotify_client_secret, scope: 'user-read-private,user-read-email,playlist-read-private,user-read-currently-playing,user-library-read,user-read-recently-played,user-top-read,playlist-modify-public'
-  github_client_id = Rails.application.credentials.github[:client_id]
-  github_client_secret = Rails.application.credentials.github[:client_secret]
-  config.omniauth :github, github_client_id, github_client_secret, scope: 'user,public_repo'
+
+  # github_client_id = Rails.application.credentials.github[:client_id]
+  # github_client_secret = Rails.application.credentials.github[:client_secret]
+  # config.omniauth :github, github_client_id, github_client_secret, scope: 'user,public_repo'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
